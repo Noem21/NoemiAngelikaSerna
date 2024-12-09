@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="icon" href="images/icon.png">
+    <title>Chendaan Forum</title>
+    <style>
+      /* CSS to style the image background */
+      body, html {
+        height: 100%;
+        margin: 0;
+        overflow: hidden; /* Prevent scrollbars */
+      }
+      
+      .image-background {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1; /* Place image behind other content */
+        overflow: hidden;
+        transform: translate(-50%, -50%);
+        background-image: url('https://www.culturetrav.co/wp-content/uploads/2016/12/01-Ilocos-Sur-Vigan-Travel.jpg');
+        background-size: cover; /* Ensure the background image covers the entire area */
+        background-position: center;
+      }
+    
+      /* Dim overlay */
+      .image-background::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Black color with 40% opacity */
+        z-index: -1; /* Ensure the overlay is behind the content */
+      }
+    
+      .content {
+        position: relative;
+        z-index: 1; /* Ensure content is above image */
+        color: white; /* Change text color to make it readable */
+      }
+    
+      .jumbotron {
+        background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+        padding: 2rem; /* Adjust padding as needed */
+      }
+    
+      .display-3 {
+        color: black;
+      }
+    
+      /* Scrollable table container */
+      .table-container {
+        max-height: 500px; /* Set a fixed height for the table container */
+        overflow-y: auto; /* Enable vertical scrolling */
+      }
+    
+      .navbar {
+        z-index: 2; /* Ensure navbar is above other elements */
+      }
+    
+      /* Table styling */
+      table {
+        background-color: rgba(255, 255, 255, 0.9); /* White background with opacity for readability */
+        border-radius: 8px; /* Rounded corners */
+        margin-top: 20px; /* Add spacing to the top */
+        width: 100%; /* Full-width table */
+      }
+    
+      th, td {
+        padding: 15px; /* Add padding inside table cells */
+        text-align: left; /* Align text to the left */
+      }
+    
+      thead {
+        background-color: rgba(0, 123, 255, 0.8); /* Add a blue background to the header */
+        color: white; /* White text for the header */
+      }
+    
+      tbody tr:nth-child(even) {
+        background-color: rgba(0, 123, 255, 0.1); /* Light blue background for even rows */
+      }
+    
+      tbody tr:nth-child(odd) {
+        background-color: rgba(0, 123, 255, 0.2); /* Darker blue background for odd rows */
+      }
+    
+      tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.3); /* Light hover effect */
+        color: white; /* Change text color to white on hover */
+      }
+    
+      .footer {
+        padding-top: 20px;
+        color: white;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <!-- Image background -->
+    <div class="image-background" style="background-image: url('https://www.culturetrav.co/wp-content/uploads/2016/12/01-Ilocos-Sur-Vigan-Travel.jpg');"></div>
+
+    <div class="content">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="index.php">
+          <img src="images/icon.png" width="40" height="30" class="d-inline-block align-top" alt="">
+          Ilocos Sur Chendaan Forum
+        </a>
+      </nav>
+      
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Forums</h1>
+
+          <nav class="navbar navbar-expand-sm navbar-light">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="index.html">All <span class="sr-only">(current)</span></a>
+              <a class="nav-item nav-link" href="electronics.html">Electronics</a>
+              <a class="nav-item nav-link" href="tv.html">TV & Appliances</a>
+              <a class="nav-item nav-link" href="men.html">Men</a>
+              <a class="nav-item nav-link" href="women.html">Women</a>
+              <a class="nav-item nav-link" href="baby.html">Baby & Kids</a>
+              <a class="nav-item nav-link" href="home.html">Home & Furniture</a>
+              <a class="nav-item nav-link active" href="sports.html">Sports & Books</a>
+              <a class="nav-item nav-link" href="others.html">Others</a>
+              <a class="nav-item nav-link" href="#"></a>
+            </div>
+            
+          </nav>
+
+          <div class="d-flex bd-highlight mb-3">
+            <div class="p-2 bd-highlight"></div>
+            <div class="p-2 bd-highlight">
+              <a class="btn btn-primary btn-info" href="new.html" role="button">+ New Topic</a>
+            </div>
+            <div class="ml-auto p-2 bd-highlight"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container table-container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Forum</th>
+              <th scope="col">Category</th>
+              <th scope="col">Posts</th>
+              <th scope="col">Date/Time</th>
+            </tr>
+          </thead>
+          <tbody id="forumList">
+            <!-- Forum topics will be dynamically inserted here -->
+          </tbody>
+        </table>
+      </div>
+
+      <br><br><br>
+      <footer>
+        <center>
+          <h6 class="footer">Designed with ❤️ by Noemie</h6>
+        </center>
+      </footer>
+    </div>
+
+    <script>
+      // Function to load and display the topics from localStorage
+      function loadTopics() {
+        const forums = JSON.parse(localStorage.getItem('forums')) || [];
+        const forumList = document.getElementById('forumList');
+
+        // Clear any previous content
+        forumList.innerHTML = '';
+
+        // Loop through all topics and display them
+        forums.forEach(forum => {
+          const forumItem = document.createElement('tr');
+          
+          forumItem.innerHTML = `
+            <td>${forum.question}</td>
+            <td>${forum.category}</td>
+            <td>0</td> <!-- Placeholder for number of posts -->
+            <td>${forum.date_time}</td>
+          `;
+
+          forumList.appendChild(forumItem);
+        });
+
+        // If no forums exist, show a message
+        if (forums.length === 0) {
+          const noForumsItem = document.createElement('tr');
+          noForumsItem.innerHTML = `
+            <td colspan="4" class="text-center">No Forums Found</td>
+          `;
+          forumList.appendChild(noForumsItem);
+        }
+      }
+
+      // Load topics when the page loads
+      window.onload = loadTopics;
+    </script>
+  </body>
+</html>

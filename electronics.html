@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="icon" href="images/icon.png">
+    <title>E-Commerce Forum</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="index.html">
+        <img src="images/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        E-Commerce Forum
+      </a>
+    </nav>
+    
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-3">Forums: Electronics</h1>
+        <nav class="navbar navbar-expand-sm navbar-light">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="index.html">All <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="electronics.html">Electronics</a>
+            <a class="nav-item nav-link" href="tv.html">TV & Appliances</a>
+            <a class="nav-item nav-link" href="men.html">Men</a>
+            <a class="nav-item nav-link" href="women.html">Women</a>
+            <a class="nav-item nav-link" href="baby.html">Baby & Kids</a>
+            <a class="nav-item nav-link" href="home.html">Home & Furniture</a>
+            <a class="nav-item nav-link" href="sports.html">Sports & Books</a>
+            <a class="nav-item nav-link" href="others.html">Others</a>
+            <a class="nav-item nav-link" href="#"></a>
+          </div>
+        </nav>
+
+        <div class="d-flex bd-highlight mb-3">
+          <div class="p-2 bd-highlight"></div>
+          <div class="p-2 bd-highlight">
+            <a class="btn btn-primary btn-info" href="new.html" role="button">+ New Topic</a>
+          </div>
+          <div class="ml-auto p-2 bd-highlight"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Forum</th>
+            <th scope="col">Category</th>
+            <th scope="col">Posts</th>
+            <th scope="col">Date/Time</th>
+          </tr>
+        </thead>
+        <tbody id="forumList">
+          <!-- Forum topics will be dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+    <br><br><br>
+    <footer>
+      <center>
+        <h6 class="footer">Designed with ❤️ by Noemie</h6>
+      </center>
+    </footer>
+
+    <script>
+      // Function to load and display the topics related to Electronics
+      function loadElectronicsForums() {
+        // Get all forums from localStorage
+        const forums = JSON.parse(localStorage.getItem('forums')) || [];
+        
+        // Filter the forums to get only those with the category 'Electronics'
+        const electronicsForums = forums.filter(forum => forum.category === 'Electronics');
+        
+        // Get the tbody element where the forum list will be displayed
+        const forumList = document.getElementById('forumList');
+        
+        // Clear any previous content
+        forumList.innerHTML = '';
+
+        // Loop through the filtered electronics forums and add them to the table
+        electronicsForums.forEach(forum => {
+          const forumItem = document.createElement('tr');
+          
+          forumItem.innerHTML = `
+            <td>${forum.question}</td>
+            <td>${forum.category}</td>
+            <td>0</td> <!-- Placeholder for number of posts -->
+            <td>${forum.date_time}</td>
+          `;
+
+          forumList.appendChild(forumItem);
+        });
+
+        // If no electronics forums are found, display a message
+        if (electronicsForums.length === 0) {
+          const noForumsItem = document.createElement('tr');
+          noForumsItem.innerHTML = `
+            <td colspan="4" class="text-center">No Electronics Forums Found</td>
+          `;
+          forumList.appendChild(noForumsItem);
+        }
+      }
+
+      // Load the electronics forums when the page loads
+      window.onload = loadElectronicsForums;
+    </script>
+  </body>
+</html>
